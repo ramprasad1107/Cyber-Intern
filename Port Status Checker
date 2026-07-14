@@ -1,0 +1,20 @@
+import socket
+
+# Input from user
+host = input("Enter the host (IP address or domain): ")
+port = int(input("Enter the port number: "))
+
+# Create a socket
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.settimeout(2)  # Timeout after 2 seconds
+
+# Check the port
+result = s.connect_ex((host, port))
+
+if result == 0:
+    print(f"Port {port} is OPEN on {host}.")
+else:
+    print(f"Port {port} is CLOSED on {host}.")
+
+# Close the socket
+s.close()
