@@ -1,0 +1,59 @@
+import re
+
+# Get email content
+email = input("Paste the email content:\n")
+
+score = 0
+reasons = []
+
+# Suspicious keywords
+urgent_words = [
+    "urgent", "immediately", "verify", "suspended",
+    "limited time", "act now", "expire", "warning"
+]
+
+# Sensitive information requests
+sensitive_words = [
+    "password", "otp", "bank account",
+    "credit card", "pin", "cvv", "ssn"
+]
+
+# Check for urgent words
+for word in urgent_words:
+    if word.lower() in email.lower():
+        score += 1
+        reasons.append(f"Urgent keyword detected: '{word}'")
+
+# Check for sensitive information requests
+for word in sensitive_words:
+    if word.lower() in email.lower():
+        score += 1
+        reasons.append(f"Sensitive information request: '{word}'")
+
+# Detect links
+links = re.findall(r'https?://\S+|www\.\S+', email)
+if links:
+    score += 1
+    reasons.append("Email contains a link.")
+    for link in links:
+        if not ("google.com" in link or "microsoft.com" in link or "amazon.com" in link):
+            score += 1
+            reasons.append(f"Unknown or suspicious link: {link}")
+
+# Display results
+print("\nEmail Security Analysis")
+print("-----------------------")
+
+if score >= 4:
+    print("Status: HIGHLY SUSPICIOUS")
+elif score >= 2:
+    print("Status: SUSPICIOUS")
+else:
+    print("Status: SAFE")
+
+if reasons:
+    print("\nReasons:")
+    for reason in reasons:
+        print("-", reason)
+else:
+    print("No suspicious patterns detected.")
