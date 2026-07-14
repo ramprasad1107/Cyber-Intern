@@ -1,0 +1,45 @@
+# Function to encrypt text
+def encrypt(text, key):
+    result = ""
+    for char in text:
+        result += chr(ord(char) + key)
+    return result
+
+# Function to decrypt text
+def decrypt(text, key):
+    result = ""
+    for char in text:
+        result += chr(ord(char) - key)
+    return result
+
+# Input file name and key
+file_name = input("Enter the file name: ")
+key = int(input("Enter the encryption key: "))
+
+# Read file content
+with open(file_name, "r") as file:
+    content = file.read()
+
+# Encrypt the content
+encrypted_data = encrypt(content, key)
+
+# Save encrypted data
+with open("encrypted.txt", "w") as file:
+    file.write(encrypted_data)
+
+print("File encrypted successfully.")
+print("Encrypted file saved as 'encrypted.txt'.")
+
+# Read encrypted file
+with open("encrypted.txt", "r") as file:
+    encrypted_content = file.read()
+
+# Decrypt the content
+decrypted_data = decrypt(encrypted_content, key)
+
+# Save decrypted data
+with open("decrypted.txt", "w") as file:
+    file.write(decrypted_data)
+
+print("File decrypted successfully.")
+print("Decrypted file saved as 'decrypted.txt'.")
