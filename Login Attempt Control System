@@ -1,0 +1,33 @@
+import time
+
+# Stored credentials
+USERNAME = "admin"
+PASSWORD = "Admin@123"
+
+MAX_ATTEMPTS = 3
+LOCK_TIME = 30  # seconds
+
+attempts = 0
+
+while True:
+    username = input("Enter Username: ")
+    password = input("Enter Password: ")
+
+    if username == USERNAME and password == PASSWORD:
+        print("\nLogin Successful! Welcome.")
+        break
+    else:
+        attempts += 1
+        remaining = MAX_ATTEMPTS - attempts
+
+        if remaining > 0:
+            print(f"\nInvalid username or password.")
+            print(f"Attempts remaining: {remaining}\n")
+        else:
+            print(f"\nToo many failed attempts!")
+            print(f"Account locked for {LOCK_TIME} seconds...")
+            time.sleep(LOCK_TIME)
+
+            # Reset attempts after lock period
+            attempts = 0
+            print("\nYou can try logging in again.\n")
